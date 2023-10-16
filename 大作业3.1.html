@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<style>
+table {
+  border-spacing: 0;
+  width: 60%;
+  border: 1px solid #ddd;
+}
+
+th {
+  cursor: pointer;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}
+#myInput {
+  background-image: url('https://static.runoob.com/images/mix/searchicon.png'); /* 添加搜索按钮 */
+  background-position: 10px 12px; /* 定位搜索按钮 */
+  background-repeat: no-repeat; /* 图片不重复 */
+  width: 20%; 
+  font-size: 16px; /* 字体大小 */
+  padding: 12px 20px 12px 40px; /* 设置内边距 */
+  border: 1px solid #ddd; /* 添加灰色边框 */
+  margin-bottom: 12px; /* 添加顶部的外边距 */
+}
+ 
+</style>
+</head>
+<body>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="搜索公司...">
+<script>
+    function myFunction() {
+  // 声明变量
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+ 
+  // 循环遍历所有列表项，并隐藏那些与搜索查询不匹配的项
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+<table id="myTable">
+  <tr>
+   <!--0 代表 name 字段，1 代表 url 字段-->  
+    <th onclick="sortTable(0)">公司名称</th>
+    <th onclick="sortTable(1)">国家</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Berglunds snabbkop</td>
+    <td>Sweden</td>
+  </tr>
+  <tr>
+    <td>Island Trading</td>
+    <td>UK</td>
+  </tr>
+  <tr>
+    <td>Koniglich</td>
+    <td>Germany</td>
+  </tr>
+  
+</table>
+
+<script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable");
+  switching = true;
+  // 设置升序排列
+  dir = "asc";
+  /* 设置一个循环语句 */
+  while (switching) {
+    // 设置循环结束标记
+    switching = false;
+    rows = table.rows;
+    /* 循环列表，从第二行开始 */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // 设置元素是否调换位置
+      shouldSwitch = false;
+      /* 获取要比较的元素,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* 判断是否将下一个元素与当前元素进行切换 (asc 或 desc):  */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // 设置调换元素标记，并结束当前循环
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // 设置调换元素标记，并结束当前循环
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* 如果元素调换位置设置为 true，则进行对调操作 */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // 每次对调完成时，将 switchcount 增加 1
+      switchcount ++;
+    } else {
+      /* 如果完成所有元素的排序且 direction 设置为 "asc",这时就将 direction 设置为 "desc" 并再次执行循环 */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
+</body>
+</html>
