@@ -20,30 +20,30 @@
 </html>
 <script type="text/javascript">
 
-    function getEndTime(myYear){
+    function getEndTime(myYear){/*倒计时截止时间*/
         var myEndTime = new Date(''+myYear+'/06/07 00:00:00');
         return myEndTime;
     }
 
-    function countDown(){
-        var mydate = new Date();
+    function countDown(){/*计时函数*/
+        var mydate = new Date();/*声明变量*/
         var year = '2021';
-        var EndTime = getEndTime(year);
+        var EndTime = getEndTime(year);/*调用getEndTime获取截止时间*/
         var NowTime = new Date();
-        if( (EndTime.getTime() - NowTime.getTime() ) < 0){
-            year = mydate.getFullYear() + 1;
+        if( (EndTime.getTime() - NowTime.getTime() ) < 0){/*如果倒计时结束*/
+            year = mydate.getFullYear() + 1;/*重新获取倒计时*/
             EndTime = getEndTime(year);
         }
-        var t = EndTime.getTime() - NowTime.getTime();
+        var t = EndTime.getTime() - NowTime.getTime();/*获取时间差（秒）*/
 
 
 
-        var d=Math.floor(t/1000/60/60/24);
+        var d=Math.floor(t/1000/60/60/24);/*时间转换*/
         var h=Math.floor(t/1000/60/60%24);
         var m=Math.floor(t/1000/60%60);
         var s=Math.floor(t/1000%60);
 
-        document.getElementById('day').innerText = d;
+        document.getElementById('day').innerText = d;/*传值给对应的项*/
         document.getElementById('hour').innerText = h;
         document.getElementById('minute').innerText = m;
         document.getElementById('second').innerText = s;
